@@ -1,0 +1,515 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>A Statistical Approach to Customer Lifetime Value - Part 2: Exponential Churn Rates - Home</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Home">
+<meta property="og:title" content="A Statistical Approach to Customer Lifetime Value - Part 2: Exponential Churn Rates">
+
+
+  <link rel="canonical" href="https://rosshochwert.github.io/customer-lifetime-value-part-2/">
+  <meta property="og:url" content="https://rosshochwert.github.io/customer-lifetime-value-part-2/">
+
+
+
+  <meta property="og:description" content="After reading my previous blog post on CLV, you send off a data request to your data analytics guy asking him to pull the January 2014 subscribers and plot their churn over time. Dutifully, he responds with this data and graph. Let’s take this data and use exponential churn to see what’s going on.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-07-24T00:00:00-04:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Ross Hochwert",
+      "url" : "https://rosshochwert.github.io",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://rosshochwert.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Home Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://rosshochwert.github.io/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://rosshochwert.github.io/">Home</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/welcome-to-me/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/projects/">Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/center/">Center Meditation</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="https://rosshochwert.github.io/images/bio-photo.jpg" class="author__avatar" alt="Ross Hochwert">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Ross Hochwert</h3>
+    <p class="author__bio">I'm a consultant with a passion for data science</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Chicago, IL</li>
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://www.linkedin.com/in/ross-hochwert-94b34a57"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  <p><i>While the individual man is an insoluble puzzle, in the aggregate he becomes a mathematical certainty. You can, for example, never foretell what any one man will do, but you can say with precision what an average number will be up to. Individuals vary, but percentages remain constant. So says the statistician.</i></br>-Sherlock Holmes
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="A Statistical Approach to Customer Lifetime Value - Part 2: Exponential Churn Rates">
+    <meta itemprop="description" content="After reading my previous blog post on CLV, you send off a data request to your data analytics guy asking him to pull the January 2014 subscribers and plot their churn over time. Dutifully, he responds with this data and graph. Let’s take this data and use exponential churn to see what’s going on.">
+    <meta itemprop="datePublished" content="July 24, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">A Statistical Approach to Customer Lifetime Value - Part 2: Exponential Churn Rates
+</h1>
+          
+            <h3 class="page__meta"><p>When you market you begin with the-4-Ps, when you model you begin with exponential</p>
+</h3>
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  6 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p><em>Disclaimer: The names and numbers of this case study have been changed for privacy concerns, however the churn data is real. If you want to follow along at home, click <a href="https://docs.google.com/spreadsheets/d/12hhdszyDdgOzWvIuz7gnF22eAwYERVyk5PEMPdrk4Ck/pubhtml?gid=0&amp;single=true">here</a> for an accompanying spreadsheet. Enjoy!</em></p>
+
+<p>After reading my <a href="/2016/07/17/customer-lifetime-value-part-1/">previous</a> blog post on CLV, you send off a data request to your data analytics guy asking him to pull the January 2014 subscribers and plot their churn over time. Dutifully, he responds with this data and graph:</p>
+
+<iframe width="526.5" height="371" seamless="" frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/12hhdszyDdgOzWvIuz7gnF22eAwYERVyk5PEMPdrk4Ck/pubchart?oid=1514985120&amp;format=interactive"></iframe>
+
+<p>Okay, so what?</p>
+
+<h2 id="computing-a-control-group">Computing a control group</h2>
+<p>Let’s assume that each period (month), your customers pay you a $50 subscription fee. Utilizing a <a href="http://www.investopedia.com/terms/d/discountrate.asp">discount rate</a> of 10% per year, we can find out the average discounted value of a customer thus far. We simply multiply $50 by the percent alive each period, discounted each period. Keep in mind, this is just the value of the average customer for the 28 months of data, NOT the customer lifetime value. Right now we’re just calibrating.</p>
+
+<p>Completing the above yields us $212 of value over the first 28 months. This $212 will be considered the control group and will help us compare our models.* Now what?</p>
+
+<h2 id="exponential-churn---a-first-attempt">Exponential churn - a first attempt</h2>
+<p>Our first crack at this problem is the exponential churn method. I’m calling this the exponential churn method because I’ve found no better name. The name exponential comes from the equation to calculate the percent of surviving customers from a cohort at any period:</p>
+
+<div>
+$$
+survivors_t = (1-\theta)^t
+$$
+</div>
+
+<p>There are three assumptions behind exponential churn:</p>
+
+<ol>
+  <li>Every period, a customer flips a weighted coin representing the churn rate. If it lands on heads, they churn.</li>
+  <li>Coin flips are independent of each other.</li>
+  <li>Everyone has the same coin.</li>
+</ol>
+
+<p>The key variable here is the churn rate: what percent of customers leave each period. If your churn rate is 10% and you start with 100 customers, that means in the first period 10 will leave (10% of 100), then of the 90 remaining, 9 will leave next (10% of 90), and so on. Every period, they keep flipping a coin with a 90% chance of tails, a 10% chance of heads.</p>
+
+<p>To solve for this optimal churn rate, I used Solver to minimize the squared difference between actual churn and our model, only utilizing the first 12 months of data.</p>
+
+<h4 id="a-quick-note-on-in-sample-fit-vs-out-of-sample-fit">A quick note on in-sample fit vs. out-of-sample fit</h4>
+<p>It’s important here to distinguish between in-sample fit and out-of-sample fit. Essentially, your in-sample fit refers to how well your model fits the given data, while out-of-sample fit refers to how well your model fits new data. If I fit the exponential model on all 28 data points, the exponential model would do much better. However, the real challenge for you data scientists out there is not to describe the data, but forecast the data. A good model doesn’t just fit data, it predicts. If you only had the first year of data because you launched a new product, you’d want to be confident that your model will work even with a few data points. Alright, let’s return to the show.</p>
+
+<p>With Solver’s help, we calculated a churn rate of 4.88% and the following graph:</p>
+
+<iframe width="526" height="428" seamless="" frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/12hhdszyDdgOzWvIuz7gnF22eAwYERVyk5PEMPdrk4Ck/pubchart?oid=1543817643&amp;format=interactive"></iframe>
+
+<p>Yeesh. That does not look good. We really have two problems going for us here:</p>
+
+<ol>
+  <li><strong>Initial bump</strong> - It looks like there is a bump from period 6 to 7 where a significant portion of our subscribers drop off. This insight will be investigated further by our marketing team to determine what’s going on after 6 months. In the meantime, we can incorporate that into our model.</li>
+  <li><strong>Non-linear data</strong> - After the bump, the data is clearly very non-linear. By the tail-end of this graph, the differences between predicted and actual churn are striking and only moving further away. We can’t fix this now, but stay tuned for part 3 where we will fix it.</li>
+</ol>
+
+<p>That being said, the value of our predicted customer over the first 28 months is $203, only a 4% error from the actual $212. With more data, the gap between predicted and actual would widen a bit more, reminding us of the importance of out-of-sample fit. But really, would you go into your boss’s room with a graph that looks like that?</p>
+
+<h2 id="initial-bump-at-6---a-refinement">Initial bump at 6 - a refinement</h2>
+<p>After talking with our product team, it turns out that after 6 months of using our product, our company actually boots off customers that are losing us money. Let’s imagine that these customers call into our call centers too often and therefore are netting us a loss, so we remove them. (This is a real phenomenon, by the way, <a href="http://www.wsj.com/articles/SB109986994931767086">check it out</a>). Given this revelation, we add a “bump” variable that allows us to kick off a certain percentage of customers.</p>
+
+<p>Between the sixth and seventh period, we add in an artificial “bump” variable, that allows us a one-time booting of a certain percentage of the cohort. Utilizing Solver once again, we now get a churn rate of 3.96% and a bump rate of 8.36%. This means that around 4% of our customers churn each period, and an additional 8% churn one-time at period six, meaning a full 12% drop after 6 months. How about this graph?</p>
+
+<iframe width="538" height="431" seamless="" frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/12hhdszyDdgOzWvIuz7gnF22eAwYERVyk5PEMPdrk4Ck/pubchart?oid=892609943&amp;format=interactive"></iframe>
+
+<p>We fixed the problem with the initial bump, but we still have a bit of separation toward the end that looks off. This model yields $209 of value over the 28 months, only 1% off from the actual value of $212! The model does well, but still doesn’t look good for the long-term. Join me next time where we’ll explore the discrete Weibull model!</p>
+
+<p><em>Notes</em></p>
+
+<ol>
+  <li>I used the actual value of the customer here for a control group and measured percent error as a proxy for fit, but in academics, there are better statistical criteria like p-values, R-squared, <a href="https://en.wikipedia.org/wiki/Likelihood_function#Log-likelihood">log-likelihood</a> and <a href="https://en.wikipedia.org/wiki/Bayesian_information_criterion">BIC</a> to name a few. Additionally, you must consider in-sample fit vs. out-of-sample fit, parsimony and story, which I hope to discuss in greater detail later.</li>
+  <li><a href="https://www.youtube.com/watch?v=k33ZQ4I4p24">Title Inspiration</a></li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-07-24T00:00:00-04:00">July 24, 2016</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=https://rosshochwert.github.io/customer-lifetime-value-part-2/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://rosshochwert.github.io/customer-lifetime-value-part-2/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https://rosshochwert.github.io/customer-lifetime-value-part-2/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://rosshochwert.github.io/customer-lifetime-value-part-2/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="https://rosshochwert.github.io/customer-lifetime-value-part-1/" class="pagination--pager" title="A Statistical Approach to Customer Lifetime Value - Part 1: An Overview for Subscription Businesses
+">Previous</a>
+    
+    
+      <a href="https://rosshochwert.github.io/naive-bayes-python/" class="pagination--pager" title="Can We Predict a Song’s Genre from its Lyrics? - Part 1
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/knn-python/" rel="permalink">Can We Predict a Song’s Genre from its Lyrics? - Part 2
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">What if our neighbors were one of us? Just strangers sitting on a bus?
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-4/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 4: The Beta Geometric
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Every customer is a unique snowflake, let’s treat them like that.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-3/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 3: Duration Dependence
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Let’s spice up our initial model by allowing retention rates to increase over time.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/naive-bayes-python/" rel="permalink">Can We Predict a Song’s Genre from its Lyrics? - Part 1
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  8 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Can we predict a song’s genre from its lyrics? - Implementing a Simple Naive Bayes in Python
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="https://rosshochwert.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Ross Hochwert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="https://rosshochwert.github.io/assets/js/main.min.js"></script>
+<script type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+  </body>
+</html>
+

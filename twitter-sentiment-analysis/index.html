@@ -1,0 +1,570 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Sentiment Analysis on Tweets Using NLTK: An Introduction - Home</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Home">
+<meta property="og:title" content="Sentiment Analysis on Tweets Using NLTK: An Introduction">
+
+
+  <link rel="canonical" href="https://rosshochwert.github.io/twitter-sentiment-analysis/">
+  <meta property="og:url" content="https://rosshochwert.github.io/twitter-sentiment-analysis/">
+
+
+
+  <meta property="og:description" content="Sentiment analysis is a fancy word for a simple problem: can a machine evaluate if something is happy or sad? That simple problem is called classification, and can be applied to many different fields like finance, law, health care and so on. Today, we’ll use it for the entertainment industry and specifically for tweets about my fake movie, ‘Ross’s Excellent Adventure’.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2015-07-17T00:00:00-04:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Ross Hochwert",
+      "url" : "https://rosshochwert.github.io",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://rosshochwert.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Home Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://rosshochwert.github.io/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://rosshochwert.github.io/">Home</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/welcome-to-me/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/projects/">Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/center/">Center Meditation</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="https://rosshochwert.github.io/images/bio-photo.jpg" class="author__avatar" alt="Ross Hochwert">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Ross Hochwert</h3>
+    <p class="author__bio">I'm a consultant with a passion for data science</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Chicago, IL</li>
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://www.linkedin.com/in/ross-hochwert-94b34a57"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  <p><i>While the individual man is an insoluble puzzle, in the aggregate he becomes a mathematical certainty. You can, for example, never foretell what any one man will do, but you can say with precision what an average number will be up to. Individuals vary, but percentages remain constant. So says the statistician.</i></br>-Sherlock Holmes
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Sentiment Analysis on Tweets Using NLTK: An Introduction">
+    <meta itemprop="description" content="Sentiment analysis is a fancy word for a simple problem: can a machine evaluate if something is happy or sad? That simple problem is called classification, and can be applied to many different fields like finance, law, health care and so on. Today, we’ll use it for the entertainment industry and specifically for tweets about my fake movie, ‘Ross’s Excellent Adventure’.">
+    <meta itemprop="datePublished" content="July 17, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Sentiment Analysis on Tweets Using NLTK: An Introduction
+</h1>
+          
+            <h3 class="page__meta"><p>A little bit of NLP by my side, a little bit of ML all night long…</p>
+</h3>
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  9 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p><em>Editor’s Note: This post is written for someone with basic knowledge of NLTK/Python and is a complement to existing resources. If you’re not in the NLTK-person demographic, I highly recommend you look at many wonderful other sources to get started first. Here’s a <a href="http://www.nltk.org/book_1ed/">goodie</a></em></p>
+
+<p>Sentiment analysis is a fancy word for a simple problem: can a machine evaluate if something is happy or sad? That simple problem is called <em>classification</em>, and can be applied to many different fields like finance, law, health care and so on. Today, we’ll use it for the entertainment industry and specifically for tweets about my fake movie, “Ross’s Excellent Adventure”.</p>
+
+<p>When it comes to <em>basic</em> sentiment analysis, we need two things:</p>
+
+<ol>
+  <li>A Corpus</li>
+  <li>A Feature Detector</li>
+</ol>
+
+<h3 id="corpus">Corpus</h3>
+<p>A corpus is a collection of already annotated texts. Our corpus is going to be a few tweets that we’ve marked as either “positive” or “negative.” Twitter strictly prohibits distributing their content without adhering to their “visual” rules, so it’s tough (and would be illegal) to find an already established corpus ready for download. Here’s some <a href="http://help.sentiment140.com/for-students">resources</a> to get you started though. NLTK comes built in with a bunch of already annotated corpus’s, including one for movies, but I will ignore those so we can learn the entire process together. Here’s my corpus:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pos_tweets</span> <span class="o">=</span> <span class="p">[(</span><span class="s">"I love this movie! You are #genius ross."</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"How innovative #rossexad is. I was lol'ing the entire time. More more more!"</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"I feel great this morning after having watched this movie. "</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"I feel alive. Love this. Really fun stuff. Hilarious. Love his humor"</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"I am so excited about the movie"</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"Love love this movie. I wish I could watch it 100 times. I really enjoyed myself"</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"He is my best friend"</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">)]</span>
+
+<span class="n">neg_tweets</span> <span class="o">=</span> <span class="p">[(</span><span class="s">"Ross's Excellent adventure sucksssss. Sucky suck suck suck. Please give me my $10 back."</span><span class="p">,</span> <span class="s">"negative"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"FU, fu very much ross for a terrible movie. Garbage. Racist and sexist you pig."</span><span class="p">,</span> <span class="s">"negative"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"I wonder if I lost IQ points from watching #rossexad. Stupid hashtag too."</span><span class="p">,</span> <span class="s">"negative"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"If I had a gun with one bullet and had to choose between watching #rossexad and killing myself, I'd watch #rossexad. I'm not an idiot, but not a good movie. "</span><span class="p">,</span> <span class="s">"negative"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"Ross, not a good guy. #rossexad"</span><span class="p">,</span> <span class="s">"negative"</span><span class="p">)]</span></code></pre></figure>
+
+<p>Note how each corpus is really just a list of tuples. Is this a big corpus? No, of course not silly reader. In reality, this is very small, very insignificant, and somewhat useless. In my humble opinion, I would try to have at least 1,000 tweets in a corpus before doing analysis. You should also look to design corpus’s for your specific domain; “crying my eyes out” may be a good phrase for movies (crying from laughter, sadness), but not so much for health care (no example needed).</p>
+
+<h3 id="feature-detector">Feature Detector</h3>
+
+<p>Right now, we have some tweets that we manually went through and marked as positive or negative. We know we’re going to feed this into our classifier, but the next step is to tell the classifier what to pay attention to. After all, the classifier is a machine, how should it know what to look for? For this, we break out our feature detector.</p>
+
+<p>From a high level, a feature detector breaks down sentences and analyzes them for the important parts. For example, words that are less than three characters (is, a, I, to, me, as) probably don’t help us much in discerning the sentiment of the tweet, so let’s remove them. We also don’t need the hashtag “#rossexad” either, so let’s remove that too.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">extract_word_feats</span><span class="p">(</span><span class="n">tweet</span><span class="p">):</span>
+    <span class="s">'''
+    Extract features from each tweet. Criteria: more than 3 letters and not the hashtag.
+    Returns the filtered words as a dict [(word, true),(word,true)]
+    '''</span>
+    <span class="n">words_filtered</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">e</span><span class="p">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">nltk</span><span class="p">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">e</span> <span class="o">!=</span> <span class="s">"rossexad"</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">words_filtered</span></code></pre></figure>
+
+<p>This function has a lot going on. First, we tokenize each word with NLTK, transforming our sentence into a list of words. Then we iterate through each word and throw it out if it’s less than 3 characters or it’s the hashtag. We then make each word lowercase and put it into a tuple (word, True), which then gets added to the rest of the dictionary. With me so far? Good.</p>
+
+<p>Why do we make it a tuple? Well, we need to supply our classifier with a “feature vector”, something that tells the classifier what each tweet has. In this example, we kept it easy and just fed it all the words that it has in a sentence (referred to as the <a href="https://en.wikipedia.org/wiki/Bag_of_words_model">bag of words model</a>), hence the (word,True) notation. Everything else is assumed to be false. As we make our feature detector more advanced, we may want to feed it words from a specific set of “significant words” or only search for 10 specific words to begin with. I’ve included links at the bottom of this post that detail more advanced models.</p>
+
+<p>To review, we’ve established a corpus which is a collection of tweets that have already been marked as positive or negative. We also created a feature detector which returns all words from a tweet longer than 2 characters and not equal to “rossexad.” Let’s throw it all together:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">training_set</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">classify</span><span class="p">.</span><span class="n">apply_features</span><span class="p">(</span><span class="n">extract_word_feats</span><span class="p">,</span> <span class="n">pos_tweets</span><span class="o">+</span><span class="n">neg_tweets</span><span class="p">)</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">NaiveBayesClassifier</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_set</span><span class="p">)</span></code></pre></figure>
+
+<p>The first line creates an official training set for our classifier in the exact format it needs (I’m still working out what data structure nltk needs, so I use the <code class="language-plaintext highlighter-rouge">apply_features</code> to do it for me). The second line “trains” the classifier (in this case a NaiveBayesClassifier). We now can play with our classifier and test it out.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="n">test_tweet_pos</span> <span class="o">=</span> <span class="s">"I loved this movie. What an awesome wat to spend an afternoon. More of this please! Thanks!"</span>
+    <span class="n">test_tweet_neg</span> <span class="o">=</span> <span class="s">"I hated this movie. Fu you ross and you're terrible sense of humor. I hate you."</span>
+    <span class="k">print</span> <span class="s">'The negative tweet is classified as:'</span>
+    <span class="k">print</span> <span class="n">classifier</span><span class="p">.</span><span class="n">classify</span><span class="p">(</span><span class="n">extract_word_feats</span><span class="p">(</span><span class="n">test_tweet_neg</span><span class="p">))</span>
+
+    <span class="k">print</span> <span class="s">'The positive tweet is classified as:'</span>
+    <span class="k">print</span> <span class="n">classifier</span><span class="p">.</span><span class="n">classify</span><span class="p">(</span><span class="n">extract_word_feats</span><span class="p">(</span><span class="n">test_tweet_pos</span><span class="p">))</span></code></pre></figure>
+
+<p>In this case, the classifier works well and classifies them appropriately. The third part to classification is testing, something I won’t detail now (because we don’t have a large enough training or testing set), but testing will either validate or destroy our feature extractor. In the future, I hope to expand this example to include more sophisticated corpuses (corpi?), feature extractors and testing data.</p>
+
+<p>Here’s my full code:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">nltk.classify.util</span>
+<span class="kn">from</span> <span class="nn">nltk.classify</span> <span class="kn">import</span> <span class="n">NaiveBayesClassifier</span>
+ 
+<span class="n">pos_tweets</span> <span class="o">=</span> <span class="p">[(</span><span class="s">"I love this movie! You are #genius ross."</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"How innovative #rossexad is. I was lol'ing the entire time. More more more!"</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"I feel great this morning after having watched this movie. "</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"I feel alive. Love this. Really fun stuff. Hilarious. Love his humor"</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"I am so excited about the movie"</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"Love love this movie. I wish I could watch it 100 times. I really enjoyed myself"</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"He is my best friend"</span><span class="p">,</span> <span class="s">"positive"</span><span class="p">)]</span>
+ 
+<span class="n">neg_tweets</span> <span class="o">=</span> <span class="p">[(</span><span class="s">"Ross's Excellent adventure sucksssss. Sucky suck suck suck. Please give me my $10 back."</span><span class="p">,</span> <span class="s">"negative"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"FU, fu very much ross for a terrible movie. Garbage. Racist and sexist you pig."</span><span class="p">,</span> <span class="s">"negative"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"I wonder if I lost IQ points from watching #rossexad. Stupid hashtag too."</span><span class="p">,</span> <span class="s">"negative"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"If I had a gun with one bullet and had to choose between watching #rossexad and killing myself, I'd watch #rossexad. I'm not an idiot, but not a good movie. "</span><span class="p">,</span> <span class="s">"negative"</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">"Ross, not a good guy. #rossexad"</span><span class="p">,</span> <span class="s">"negative"</span><span class="p">)]</span>
+ 
+ 
+<span class="k">def</span> <span class="nf">extract_word_feats</span><span class="p">(</span><span class="n">tweet</span><span class="p">):</span>
+    <span class="s">'''
+    Extract features from each tweet. Criteria: more than 3 letters and not the hashtag.
+    Returns the filtered words as a dict [(word, true),(word,true)]
+    '''</span>
+    <span class="n">words_filtered</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">e</span><span class="p">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">nltk</span><span class="p">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">e</span> <span class="o">!=</span> <span class="s">"rossexad"</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">words_filtered</span>
+ 
+ 
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">training_set</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">classify</span><span class="p">.</span><span class="n">apply_features</span><span class="p">(</span><span class="n">extract_word_feats</span><span class="p">,</span> <span class="n">pos_tweets</span><span class="o">+</span><span class="n">neg_tweets</span><span class="p">)</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">NaiveBayesClassifier</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_set</span><span class="p">)</span>
+    <span class="n">classifier</span><span class="p">.</span><span class="n">show_most_informative_features</span><span class="p">()</span>
+ 	
+    <span class="n">test_tweet_pos</span> <span class="o">=</span> <span class="s">"I loved this movie. What an awesome wat to spend an afternoon. More of this please! Thanks!"</span>
+    <span class="n">test_tweet_neg</span> <span class="o">=</span> <span class="s">"I hated this movie. Fu you ross and you're terrible sense of humor. I hate you."</span>
+    <span class="k">print</span> <span class="s">'The negative tweet is classified as:'</span>
+    <span class="k">print</span> <span class="n">classifier</span><span class="p">.</span><span class="n">classify</span><span class="p">(</span><span class="n">extract_word_feats</span><span class="p">(</span><span class="n">test_tweet_neg</span><span class="p">))</span>
+ 
+    <span class="k">print</span> <span class="s">'The positive tweet is classified as:'</span>
+    <span class="k">print</span> <span class="n">classifier</span><span class="p">.</span><span class="n">classify</span><span class="p">(</span><span class="n">extract_word_feats</span><span class="p">(</span><span class="n">test_tweet_pos</span><span class="p">))</span>
+ 
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span></code></pre></figure>
+
+<p><em>Special thanks to the following blogs/people for help on this post. They have amazing information and much better examples, so consult them first for when you’re confused (in fact just don’t even read my post, just go to them).</em></p>
+
+<ol>
+  <li><a href="http://streamhacker.com/2010/06/16/text-classification-sentiment-analysis-eliminate-low-information-features/">Stream Hacker: Text Classification for Sentiment Analysis - Eliminate Low Information Features</a>. A great read on decreasing dimensionality to improve results.</li>
+  <li><a href="http://streamhacker.com/2010/05/10/text-classification-sentiment-analysis-naive-bayes-classifier/">Stream Hacker: Text Classification for Sentiment Analysis - Naive Bayes Classifier</a>. A basic introduction to classification with movie reviews. 10x better than what I’ve written here.</li>
+  <li><a href="http://www.laurentluce.com/posts/twitter-sentiment-analysis-using-python-and-nltk/">Twitter Sentiment Analysis Using Python and NLTK</a>. Our posts share the same title, but hers is much more thorough. She’s like the book, I’m the cliffs notes.</li>
+  <li><a href="https://gist.github.com/rosshochwert/67a964ae31b238a866bf">Twitter Sentiment Analysis Gist</a> A link to my code.</li>
+  <li><a href="https://www.youtube.com/watch?v=EK_LN3XEcnw">Title Inspiration</a></li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-07-17T00:00:00-04:00">July 17, 2015</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=https://rosshochwert.github.io/twitter-sentiment-analysis/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://rosshochwert.github.io/twitter-sentiment-analysis/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https://rosshochwert.github.io/twitter-sentiment-analysis/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://rosshochwert.github.io/twitter-sentiment-analysis/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="https://rosshochwert.github.io/big-data-sentiment-analysis-real-world/" class="pagination--pager" title="Big Data: Sentiment Analysis in the Real World
+">Previous</a>
+    
+    
+      <a href="https://rosshochwert.github.io/Naive-Bayes-Classifier-101-Your-Guide-to-Understanding-a-Simple-ML-Classifier/" class="pagination--pager" title="Naïve Bayes Classifier 101: Your Guide to Understanding a Simple ML Classifier
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/knn-python/" rel="permalink">Can We Predict a Song’s Genre from its Lyrics? - Part 2
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">What if our neighbors were one of us? Just strangers sitting on a bus?
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-4/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 4: The Beta Geometric
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Every customer is a unique snowflake, let’s treat them like that.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-3/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 3: Duration Dependence
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Let’s spice up our initial model by allowing retention rates to increase over time.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/naive-bayes-python/" rel="permalink">Can We Predict a Song’s Genre from its Lyrics? - Part 1
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  8 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Can we predict a song’s genre from its lyrics? - Implementing a Simple Naive Bayes in Python
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="https://rosshochwert.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Ross Hochwert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="https://rosshochwert.github.io/assets/js/main.min.js"></script>
+<script type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+  </body>
+</html>
+

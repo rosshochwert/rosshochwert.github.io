@@ -1,0 +1,540 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Can We Predict a Song’s Genre from its Lyrics? - Part 2 - Home</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Home">
+<meta property="og:title" content="Can We Predict a Song’s Genre from its Lyrics? - Part 2">
+
+
+  <link rel="canonical" href="https://rosshochwert.github.io/knn-python/">
+  <meta property="og:url" content="https://rosshochwert.github.io/knn-python/">
+
+
+
+  <meta property="og:description" content="What if our neighbors were one of us? Just strangers sitting on a bus?">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-09-18T00:00:00-04:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Ross Hochwert",
+      "url" : "https://rosshochwert.github.io",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://rosshochwert.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Home Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://rosshochwert.github.io/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://rosshochwert.github.io/">Home</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/welcome-to-me/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/projects/">Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/center/">Center Meditation</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="https://rosshochwert.github.io/images/bio-photo.jpg" class="author__avatar" alt="Ross Hochwert">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Ross Hochwert</h3>
+    <p class="author__bio">I'm a consultant with a passion for data science</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Chicago, IL</li>
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://www.linkedin.com/in/ross-hochwert-94b34a57"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  <p><i>While the individual man is an insoluble puzzle, in the aggregate he becomes a mathematical certainty. You can, for example, never foretell what any one man will do, but you can say with precision what an average number will be up to. Individuals vary, but percentages remain constant. So says the statistician.</i></br>-Sherlock Holmes
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Can We Predict a Song’s Genre from its Lyrics? - Part 2">
+    <meta itemprop="description" content="What if our neighbors were one of us? Just strangers sitting on a bus?">
+    <meta itemprop="datePublished" content="September 18, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Can We Predict a Song’s Genre from its Lyrics? - Part 2
+</h1>
+          
+            <h3 class="page__meta"><p>Implementing kNN in Python</p>
+</h3>
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Rivalries are as old as time. Leah vs Rachel, Monica vs Chandler, and now, Naive Bayes vs k nearest neighbors. A real statistician would go through the <a href="https://www.quora.com/Classification-machine-learning-When-should-I-use-a-K-NN-classifier-over-a-Naive-Bayes-classifier">pros and cons</a> of each, but alas, I am not a real statistician. So instead, I write a witty introduction and move on!</p>
+
+<p><em>A quick note: the full code can be viewed <a href="https://github.com/rosshochwert/machine-learning-with-songs/tree/master/k-Nearest%20Neighbors">here</a>. Previous blog post is <a href="/naive-bayes-python/">here</a></em></p>
+
+<h2 id="overview">Overview</h2>
+
+<p>k Nearest Neighbors is a deceivingly simple algorithm. The idea is to plot each song in your library on a map. For simplicity, let’s assume it’s a two dimensional map with the x-axis being number of words, and the y-axis being average length of words. In this case, we would simply compute an (x,y) coordinate for each song, then plot all the songs on a map. The second step is to take a new song, not in our corpus, and plot it on our map. Finally, we find the <em>k</em>-closest neighbors and find out the mode (most frequently occurring) song type. If \(k=1\), then we take the single closest neighbor and assume that song’s category to be the same as its closest neighbor.</p>
+
+<h2 id="the-complication">The Complication</h2>
+
+<p>Well that’s all well and fun in two dimensions, but that’s pretty basic. We want to leverage <em>all</em> the words at once, not just two features of the song. A song with 100 different words would yield 100 different dimensions! And it would just be a bunch of 0s and 1s. I can barely think in <a href="https://en.wikipedia.org/wiki/Flatland">3 dimensions</a>, let alone 100!</p>
+
+<h2 id="the-solution">The Solution</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/Cosine_similarity">Cosine mother-f-ing similarity</a> (if you thought this blog was SFW, you forgot how desperate I am for attention). Cosine similarity measures the similarity between two non-zero vectors by taking the dot product over the magnitude of those two vectors:</p>
+
+<div>
+$$
+cos(\theta) = \frac{\bf{A} \cdot \bf{B}}{||\bf{A}|| ||\bf{B}||}
+$$
+</div>
+
+<p>The results range from -1, meaning exact opposite, to 1, meaning exactly the same. Let’s show a brief example. Consider the following sentences:</p>
+
+<p>A. “This sentence rules yeah”
+&lt;/br&gt;
+B. “This sentence rocks”
+&lt;/br&gt;
+C. “This phrase bad”</p>
+
+<p>Step 1 is to convert these into feature vectors:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sent_a</span> <span class="o">=</span> <span class="p">{</span><span class="s">"this"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"sentence"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"rules"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"yeah"</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="n">sent_b</span> <span class="o">=</span> <span class="p">{</span><span class="s">"this"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"sentence"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"rocks"</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="n">sent_c</span> <span class="o">=</span> <span class="p">{</span><span class="s">"this"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"phrase"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"bad"</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span></code></pre></figure>
+
+<p>Step 2 is to perform the analysis! Starting with sentence A and B:</p>
+
+\[cos(\theta) = \frac{\bf{A} \cdot \bf{B}}{||\bf{A}|| ||\bf{B}||}\]
+
+\[cos(\theta) = \frac{1 * 1 + 1 * 1}{\sqrt{(1^2+1^2+1^2+1^2)}\sqrt{(1^2+1^2+1^2)}}\]
+
+\[cos(\theta) = \frac{2}{\sqrt{(4)}\sqrt{(3)}}\]
+
+\[cos(\theta) = \frac{2}{2*\sqrt{(3)}}\]
+
+\[cos(\theta) = 0.577\]
+
+<p>Not bad! Let’s try to compare sentence A and C.</p>
+
+\[cos(\theta) = \frac{\bf{A} \cdot \bf{B}}{||\bf{A}|| ||\bf{B}||}\]
+
+\[cos(\theta) = \frac{1*1}{\sqrt{(1^2+1^2+1^2+1^2)}\sqrt{(1^2+1^2+1^2)}}\]
+
+\[cos(\theta) = \frac{1}{\sqrt{(3)}\sqrt{(4)}}\]
+
+\[cos(\theta) = \frac{1}{2*\sqrt{(3)}}\]
+
+\[cos(\theta) = 0.289\]
+
+<p>Less similar, but that’s to be expected. Basically, the more overlap in words, the bigger the numerator gets which increase the similarity. Now that we have a similarity measure, the rest is easy! All we do is take our new song, compute the cosine similarity between this new song and our entire corpus, sort in descending order, then grab the top \(k\) and take the mode of those.</p>
+
+<h2 id="training-the-corpus">Training the Corpus</h2>
+
+<p>The constructor class and auxiliary functions (stemming, tokenizing) are the same as before, so let’s skip through those and discuss in fine detail the training and predicting classes. Starting with the training function:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">train_corpus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">tokenize</span><span class="p">,</span> <span class="n">stop_words</span><span class="o">=</span><span class="s">'english'</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">X_train_data</span><span class="p">)</span></code></pre></figure>
+
+<p>I know all of you fans at home are screaming at your computer screens right now. You’re probably saying things like: “I stayed up all night waiting for this new blog post, only for you to cop out and use a pre-programmed vectorizer?!” Loyal fans, it’s true. That first line, the <code class="language-plaintext highlighter-rouge">TfidfVectorizer</code>, it does take all of our sentences and turn them into the <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">tf-idf</a> feature vectors for us. tf-idf is a very important concept in text mining that essentially weighs words by how they important they are in a document. I don’t have time to go through the whole concept, so I copped out with a sci-kit function. The next line goes through our training data, and transforms it into a beautiful corpus. I’m moving on loyal readers, I hope you can too.</p>
+
+<h2 id="testing-the-corpus">Testing the Corpus</h2>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">predict_song</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">song</span><span class="p">):</span>
+    <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">linear_kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">X_train</span><span class="p">,</span> <span class="n">song</span><span class="p">).</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">related_docs_indices</span> <span class="o">=</span> <span class="n">cosine_similarities</span><span class="p">.</span><span class="n">argsort</span><span class="p">()[:</span><span class="o">-</span><span class="bp">self</span><span class="p">.</span><span class="n">k</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">words_to_count</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">Y_train_data</span><span class="p">[</span><span class="n">related_docs_indices</span><span class="p">]</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">words_to_count</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">c</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></code></pre></figure>
+
+<p>The predict function takes in a song (that has already been converted into a feature vector), and outputs a category. The first line of this function takes the cosine similarity between the new song and our training corpus. We then sort the list and take the top \(k\) results. Now, the tricky part here is that the cosine similarities are all numbers and our categories are stored in the accompanying <code class="language-plaintext highlighter-rouge">Y_train_data</code>, so we just look at the indices of the <code class="language-plaintext highlighter-rouge">X_train_data</code>, and pull out the corresponding categories from <code class="language-plaintext highlighter-rouge">Y_train_data</code>. We then use a counter to find the mode, and return the first result!</p>
+
+<h2 id="conclusion--next-steps">Conclusion + Next Steps</h2>
+
+<p>I hope this code helps you design your own kNN. The next steps here would be to calibrate appropriate \(k\)s and perhaps exploring other similarity measures. There’s also the fun of feature selection and messing around with your data a little more.</p>
+
+<p>Notes:</p>
+
+<ol>
+  <li>Title Inspiration - <a href="https://www.youtube.com/watch?v=7Gx1Pv02w3Q">link</a></li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-09-18T00:00:00-04:00">September 18, 2016</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=https://rosshochwert.github.io/knn-python/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://rosshochwert.github.io/knn-python/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https://rosshochwert.github.io/knn-python/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://rosshochwert.github.io/knn-python/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="https://rosshochwert.github.io/customer-lifetime-value-part-4/" class="pagination--pager" title="A Statistical Approach to Customer Lifetime Value - Part 4: The Beta Geometric
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-4/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 4: The Beta Geometric
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Every customer is a unique snowflake, let’s treat them like that.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-3/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 3: Duration Dependence
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  4 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Let’s spice up our initial model by allowing retention rates to increase over time.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/naive-bayes-python/" rel="permalink">Can We Predict a Song’s Genre from its Lyrics? - Part 1
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  8 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Can we predict a song’s genre from its lyrics? - Implementing a Simple Naive Bayes in Python
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-2/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 2: Exponential Churn Rates
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  6 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">After reading my previous blog post on CLV, you send off a data request to your data analytics guy asking him to pull the January 2014 subscribers and plot t...</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="https://rosshochwert.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Ross Hochwert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="https://rosshochwert.github.io/assets/js/main.min.js"></script>
+<script type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,504 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Naïve Bayes Classifier 101: Your Guide to Understanding a Simple ML Classifier - Home</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Home">
+<meta property="og:title" content="Naïve Bayes Classifier 101: Your Guide to Understanding a Simple ML Classifier">
+
+
+  <link rel="canonical" href="https://rosshochwert.github.io/Naive-Bayes-Classifier-101-Your-Guide-to-Understanding-a-Simple-ML-Classifier/">
+  <meta property="og:url" content="https://rosshochwert.github.io/Naive-Bayes-Classifier-101-Your-Guide-to-Understanding-a-Simple-ML-Classifier/">
+
+
+
+  <meta property="og:description" content="In my last post, I used a Naïve Bayes Classifier implemented in NLTK to classify tweets as positive or negative, but I didn’t really talk about where the classifier comes from. I wasn’t terribly satisfied with the ‘what is a naïve bayes classifier’ Google results, so I’ll pitch in my two cents here.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2015-07-28T00:00:00-04:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Ross Hochwert",
+      "url" : "https://rosshochwert.github.io",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://rosshochwert.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Home Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://rosshochwert.github.io/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://rosshochwert.github.io/">Home</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/welcome-to-me/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/projects/">Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/center/">Center Meditation</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="https://rosshochwert.github.io/images/bio-photo.jpg" class="author__avatar" alt="Ross Hochwert">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Ross Hochwert</h3>
+    <p class="author__bio">I'm a consultant with a passion for data science</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Chicago, IL</li>
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://www.linkedin.com/in/ross-hochwert-94b34a57"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  <p><i>While the individual man is an insoluble puzzle, in the aggregate he becomes a mathematical certainty. You can, for example, never foretell what any one man will do, but you can say with precision what an average number will be up to. Individuals vary, but percentages remain constant. So says the statistician.</i></br>-Sherlock Holmes
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Naïve Bayes Classifier 101: Your Guide to Understanding a Simple ML Classifier">
+    <meta itemprop="description" content="In my last post, I used a Naïve Bayes Classifier implemented in NLTK to classify tweets as positive or negative, but I didn’t really talk about where the classifier comes from. I wasn’t terribly satisfied with the ‘what is a naïve bayes classifier’ Google results, so I’ll pitch in my two cents here.">
+    <meta itemprop="datePublished" content="July 28, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Naïve Bayes Classifier 101: Your Guide to Understanding a Simple ML Classifier
+</h1>
+          
+            <h3 class="page__meta"><p>Who you calling naive…</p>
+</h3>
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  6 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>In my last post, I used a Naïve Bayes Classifier from NLTK to classify tweets as positive or negative, but I didn’t really talk about where the classifier comes from. I wasn’t terribly satisfied with the “what is a naïve bayes classifier” Google results, so I’ll pitch in my two cents here.</p>
+
+<h3 id="bayesian-probability">Bayesian Probability</h3>
+<p>The Bayes classifier is a direct byproduct of Bayesian probability. Bayesian probability stems directly from Bayes’ theorem. Bayes’’’ theorem is that thing you learned in college but probably forgot an hour later. At a high level, a Bayes classifier utilizes the independent probability of each “feature” to classify our data. For our twitter example, our classifier looks at each individual word from our training set and determines the independent probability of that word occurring in a negative or positive tweet.</p>
+
+<p>Rather than write 1,000 words on Bayesian vs. Frequentist approach or fill the page with examples of Bayes’ theorem, I’d like to keep it high level. We basically need three elements for Bayesian inference: a prior, a likelihood, and evidence. Here’s our formula:</p>
+
+<div>
+$$ P(A \mid B) = \frac{P(B \mid A) \, P(A)}{P(B)} $$
+$$ or $$
+$$ posterior = \frac{likelihood*prior}{evidence} $$
+</div>
+
+<h4 id="the-prior">The Prior</h4>
+<p>The prior is our probability of X before we know <em>anything</em>. Quite literally, “prior” to meeting this person or addressing this problem, what’s the probability of X. For our tweets, the prior is the general probability a tweet about my movie will be positive. In order to estimate the prior, I look to Rotten Tomatoes and find that my movie scored a 74% positive score (not bad), so I assume a 74% prior: 74% of my reviews <em>should</em> be positive without knowing anything else.</p>
+
+<h4 id="the-likelihood">The Likelihood</h4>
+<p>This percentage describes how often the word appears in <em>positive</em> tweets. For example, given that a tweet is positive, what percentage of the time will that tweet contain the word “great?”” In our <a href="https://en.wikipedia.org/wiki/Bag-of-words_model">“bag of words”</a> model, we’ll compute this for each word, multiply by our prior (the probability a tweet is positive) and add them up together. As an example, let’s assume that “great” appears in 45% of positive tweets.</p>
+
+<h4 id="the-evidence">The Evidence</h4>
+<p>This is the denominator of our equation and is the probability the word “great” shows up in any tweet, positive or negative. When dealing with multiple words, again, we’ll have to add all these independent probabilities together. As an example, let’s say the word “great” shows up in 60% of total tweets.</p>
+
+<p>After performing the calculations, we are left with a posterior, or a probability, that a tweet is positive, given the words we provided. To keep things simple, we assume that this tweet is only one word, “great.”</p>
+
+<div>
+$$ P(A \mid B) = \frac{P(B \mid A) \, P(A)}{P(B)} $$
+$$ posterior = \frac{45\% * 74\%}{60\%} $$
+$$ posterior = 55\% $$
+</div>
+
+<p>At 55%, our classifier says this tweet makes the threshold and can be classified as positive.* In a real situation, we’d add many more words.</p>
+
+<h2 id="so-what">So What?</h2>
+<p>Why should you care? Well, the Naïve Bayes classifier is super popular because it’s grounded in intuition and simplicity: we multiply a bunch of percentages together and pick the highest number. If you can break a problem down into words and associate each of those words with a class (positive/negative tweet, spam/not spam message, angry/happy customer), you can quickly work up a model to automate this classification process.</p>
+
+<p>I hope by the end of this post, the path to utilizing NLP and ML in your work is becoming clearer. By manually classifying tweets as positive or negative, we create a corpus for our Naïve Bayes classifier. Our classifier calculates how often all words appear in positive tweets and negative tweets and stores that away when we do our “training”. When test tweets, all the classifier needs to do is find the probabilities for each word, add them up and spit out an answer.</p>
+
+<h2 id="whats-next">What’s Next?</h2>
+<p>“Bayesian inference, classification, machine learning, it all seems so easy!” you say, “why spend more than 10 minutes on this?” Well, you and I both know this is a simplification. But even wihin my simplification, there’s one critical ML aspect I glossed over (that I shouldn’t have): feature selection. So far, we have fed our classifier <em>everything</em>, as the “bag of words” model dictates. But is that always effective? Of course not. In computer science, there’s a saying that goes <a href="https://en.wikipedia.org/wiki/Garbage_in,_garbage_out">“garbage in, garbage out.”</a> If you put garbage in your model, your model will spit out garbage. Instead of feeding out classifier every word, what if we only fed it words longer than 3 characters. Or only the top 1000 words from our training set. Or only 500 pre-selected words that seem informative. What about <a href="https://en.wikipedia.org/wiki/Collocation">collocations</a>?</p>
+
+<p>Personally, I don’t think the role of the data scientist is to just understand how the underlying classifier works, but also to understand how to maximize results with this classifier and what to do with those results. That includes how to gather, clean and select the best data for your model. It’s a combination of statistics (to understand how Bayesian inference and classifiers work), computer science (to code in the NLP and ML objects) and business (choosing the correct features/data and analyzing business impact.)</p>
+
+<p>*In true Bayesian inference, our prior and posterior would be distribution functions.</p>
+
+<p>Links:</p>
+
+<p><em>I may have been unsatisfied with the Google results, but here are some good resources:</em></p>
+
+<ol>
+  <li>StackOverflow answer is a pretty good place to start for Bayes classification. <a href="http://stackoverflow.com/a/20556654">Link</a></li>
+  <li>Dell has an atypically nice post: <a href="http://documents.software.dell.com/Statistics/Textbook/Naive-Bayes-Classifier">Link</a></li>
+  <li>Very long and a bit reductive, but a good start for the young’uns in your life. <a href="http://guidetodatamining.com/guide/ch6/DataMining-ch6.pdf">Link</a></li>
+  <li>The NLTK docs do a really good job of explaining this as well <a href="http://www.nltk.org/_modules/nltk/classify/naivebayes.html">Link</a></li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-07-28T00:00:00-04:00">July 28, 2015</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=https://rosshochwert.github.io/Naive-Bayes-Classifier-101-Your-Guide-to-Understanding-a-Simple-ML-Classifier/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://rosshochwert.github.io/Naive-Bayes-Classifier-101-Your-Guide-to-Understanding-a-Simple-ML-Classifier/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https://rosshochwert.github.io/Naive-Bayes-Classifier-101-Your-Guide-to-Understanding-a-Simple-ML-Classifier/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://rosshochwert.github.io/Naive-Bayes-Classifier-101-Your-Guide-to-Understanding-a-Simple-ML-Classifier/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="https://rosshochwert.github.io/twitter-sentiment-analysis/" class="pagination--pager" title="Sentiment Analysis on Tweets Using NLTK: An Introduction
+">Previous</a>
+    
+    
+      <a href="https://rosshochwert.github.io/big-data-size-isnt-everything/" class="pagination--pager" title="Big Data: Size Isn’t Everything
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/knn-python/" rel="permalink">Can We Predict a Song’s Genre from its Lyrics? - Part 2
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">What if our neighbors were one of us? Just strangers sitting on a bus?
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-4/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 4: The Beta Geometric
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Every customer is a unique snowflake, let’s treat them like that.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-3/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 3: Duration Dependence
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Let’s spice up our initial model by allowing retention rates to increase over time.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/naive-bayes-python/" rel="permalink">Can We Predict a Song’s Genre from its Lyrics? - Part 1
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  8 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Can we predict a song’s genre from its lyrics? - Implementing a Simple Naive Bayes in Python
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="https://rosshochwert.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Ross Hochwert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="https://rosshochwert.github.io/assets/js/main.min.js"></script>
+<script type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+  </body>
+</html>
+

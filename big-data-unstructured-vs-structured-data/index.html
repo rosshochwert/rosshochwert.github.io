@@ -1,0 +1,469 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Big Data: Unstructured vs. Structured Data - Home</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Home">
+<meta property="og:title" content="Big Data: Unstructured vs. Structured Data">
+
+
+  <link rel="canonical" href="https://rosshochwert.github.io/big-data-unstructured-vs-structured-data/">
+  <meta property="og:url" content="https://rosshochwert.github.io/big-data-unstructured-vs-structured-data/">
+
+
+
+  <meta property="og:description" content="What is big data? Why is big data here? What does big data do?">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2015-07-12T00:00:00-04:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Ross Hochwert",
+      "url" : "https://rosshochwert.github.io",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://rosshochwert.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Home Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://rosshochwert.github.io/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://rosshochwert.github.io/">Home</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/welcome-to-me/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/projects/">Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/center/">Center Meditation</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="https://rosshochwert.github.io/images/bio-photo.jpg" class="author__avatar" alt="Ross Hochwert">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Ross Hochwert</h3>
+    <p class="author__bio">I'm a consultant with a passion for data science</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Chicago, IL</li>
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://www.linkedin.com/in/ross-hochwert-94b34a57"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  <p><i>While the individual man is an insoluble puzzle, in the aggregate he becomes a mathematical certainty. You can, for example, never foretell what any one man will do, but you can say with precision what an average number will be up to. Individuals vary, but percentages remain constant. So says the statistician.</i></br>-Sherlock Holmes
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Big Data: Unstructured vs. Structured Data">
+    <meta itemprop="description" content="What is big data? Why is big data here? What does big data do?">
+    <meta itemprop="datePublished" content="July 12, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Big Data: Unstructured vs. Structured Data
+</h1>
+          
+            <h3 class="page__meta"><p>Part 1 in a Series on Big Data</p>
+</h3>
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  2 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>What is big data? Why is big data here? What does big data do? Replace all of instances of “big data” with “the cloud” and you’ll see the recurring phenomenon of new technology entering the limelight despite most people understanding what is it. Usually technology is quite easy to understand: POS scanners track sales, Excel analyzes data, and iPods play music. So why is big data so hard?</p>
+
+<p>Big data is hard to understand because it really isn’t anything, per se. Big data, quite literally, is just storing large amounts of data. Lots of it. Of all different shapes and sizes. And it grows. Everyday. As storage costs go down (and much of it moves to…the cloud), businesses are more apt to store stuff. Stupid, dumb stuff like tweets, customer reviews, videos and more. Why is the data dumb? It’s probably not the best characterization, but in order to explore “dumb data”, let’s talk unstructured versus structured data.</p>
+
+<h3 id="structured-data">Structured Data:</h3>
+<p>If you can put it into excel, it’s probably structured. Think of a typical sales spreadsheet for your favorite candy store. It shows them each candy, how much was sold, at what price and so on. It has SKUs, prices, quantities and dates, all nicely formatted. For marketing professionals, you’d use SCAN*PRO on it. For data nerds, you’d pull it out of a SQL database with joins and where clauses. For the sales team, you’d take it out to dinner. (I’m assuming, I’m not in sales).</p>
+
+<h3 id="unstructured-data">Unstructured Data:</h3>
+<p>Whatever your crazy uncle shares on Facebook. The weird videos, the conspiracy articles, the vaguely-uncomfortable and probably not PC tweets. You know the drill. Unstructured data is data that doesn’t have some model (or metadata) to describe it. Most unstructured data is very text heavy: essays, articles, blogs and reviews receive most of the focus right now.</p>
+
+<p>But what of this JSON example. Imagine this JSON response:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">article</span><span class="p">:</span> <span class="p">{</span>
+	<span class="dl">'</span><span class="s1">author</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Ross</span><span class="dl">'</span><span class="p">,</span>
+	<span class="dl">'</span><span class="s1">tags</span><span class="dl">'</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">cool guy</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">trendy topics</span><span class="dl">'</span><span class="p">],</span>
+	<span class="dl">'</span><span class="s1">text</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Here is my article on big data. Oohh</span><span class="dl">'</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>On the one hand, we know the author, tags and texts right then and there, so it’s structured. On the other hand, “cool guy” and “trendy topics” aren’t absolute values like $1.99 or 1/4/2015. So it’s a toss-up. How do we break the tie? Bad question, readers. Let’s instead ask how we can use unstructured data as if it’s structured, using movie reviews as a start, my next blog post. The point that I’d like to make here, is big data is useless (like all data), without appropriate analysis. The analysis for big data is just cooler.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-07-12T00:00:00-04:00">July 12, 2015</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=https://rosshochwert.github.io/big-data-unstructured-vs-structured-data/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://rosshochwert.github.io/big-data-unstructured-vs-structured-data/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https://rosshochwert.github.io/big-data-unstructured-vs-structured-data/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://rosshochwert.github.io/big-data-unstructured-vs-structured-data/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="https://rosshochwert.github.io/im-back-baby/" class="pagination--pager" title="I’m back baby!
+">Previous</a>
+    
+    
+      <a href="https://rosshochwert.github.io/big-data-sentiment-analysis-real-world/" class="pagination--pager" title="Big Data: Sentiment Analysis in the Real World
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/knn-python/" rel="permalink">Can We Predict a Song’s Genre from its Lyrics? - Part 2
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">What if our neighbors were one of us? Just strangers sitting on a bus?
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-4/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 4: The Beta Geometric
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Every customer is a unique snowflake, let’s treat them like that.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-3/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 3: Duration Dependence
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Let’s spice up our initial model by allowing retention rates to increase over time.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/naive-bayes-python/" rel="permalink">Can We Predict a Song’s Genre from its Lyrics? - Part 1
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  8 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Can we predict a song’s genre from its lyrics? - Implementing a Simple Naive Bayes in Python
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="https://rosshochwert.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Ross Hochwert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="https://rosshochwert.github.io/assets/js/main.min.js"></script>
+<script type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+  </body>
+</html>
+

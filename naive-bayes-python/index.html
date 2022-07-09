@@ -1,0 +1,610 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Can We Predict a Song’s Genre from its Lyrics? - Part 1 - Home</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Home">
+<meta property="og:title" content="Can We Predict a Song’s Genre from its Lyrics? - Part 1">
+
+
+  <link rel="canonical" href="https://rosshochwert.github.io/naive-bayes-python/">
+  <meta property="og:url" content="https://rosshochwert.github.io/naive-bayes-python/">
+
+
+
+  <meta property="og:description" content="Can we predict a song’s genre from its lyrics? - Implementing a Simple Naive Bayes in Python">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-08-01T00:00:00-04:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Ross Hochwert",
+      "url" : "https://rosshochwert.github.io",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://rosshochwert.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="Home Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://rosshochwert.github.io/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://rosshochwert.github.io/">Home</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/welcome-to-me/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/projects/">Projects</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://rosshochwert.github.io/center/">Center Meditation</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="https://rosshochwert.github.io/images/bio-photo.jpg" class="author__avatar" alt="Ross Hochwert">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Ross Hochwert</h3>
+    <p class="author__bio">I'm a consultant with a passion for data science</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Chicago, IL</li>
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://www.linkedin.com/in/ross-hochwert-94b34a57"><i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn</a></li>
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  <p><i>While the individual man is an insoluble puzzle, in the aggregate he becomes a mathematical certainty. You can, for example, never foretell what any one man will do, but you can say with precision what an average number will be up to. Individuals vary, but percentages remain constant. So says the statistician.</i></br>-Sherlock Holmes
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Can We Predict a Song’s Genre from its Lyrics? - Part 1">
+    <meta itemprop="description" content="Can we predict a song’s genre from its lyrics? - Implementing a Simple Naive Bayes in Python">
+    <meta itemprop="datePublished" content="August 01, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Can We Predict a Song’s Genre from its Lyrics? - Part 1
+</h1>
+          
+            <h3 class="page__meta"><p>Implementing a Simple Naive Bayes in Python</p>
+</h3>
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  8 minute read
+	
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Have you ever wondered if different music genres use certain words more often than others? Do country songs talk about dirt roads and beer more often than rock songs? Do rap songs swear more often than jazz? If you’re like <a href="https://www.linkedin.com/in/alexanderranney">Alex</a> and I, these questions keep you up at night. We built a corpus and did the analysis so you don’t have to. Along the way, we learned more about ourselves than we originally intentioned (and certainly less about lyrics, the project wasn’t that successful).</p>
+
+<p>Our approach was to build a corpus of songs with genres and lyrics, then implement <strong>naive bayes</strong> and <strong>k-nearest neighbors</strong> for prediction. This blog post details our naive bayes implementation and the accompanying code. At this point, we had already built a corpus and saved it in a database, so the next step was to train the model and predict new songs.</p>
+
+<p><em>A quick note: the full code can be viewed <a href="https://github.com/rosshochwert/machine-learning-with-songs/blob/master/Naive%20Bayes/rrNB.py">here</a>.</em></p>
+
+<h2 id="constructor-class">Constructor class</h2>
+
+<p>Nothing too exciting here with the constructor class. In this case, <code class="language-plaintext highlighter-rouge">X_train_data</code> is a list of songs lyrics with each item being a song. <code class="language-plaintext highlighter-rouge">Y_train_data</code> is an accompanying list of genres that correspond to each song. The data has already been divided into <code class="language-plaintext highlighter-rouge">train</code> and <code class="language-plaintext highlighter-rouge">test</code> buckets in this case. You can see that our 4 categories are Easy Listening, Rap, Country, and Post-1980s rock. The <code class="language-plaintext highlighter-rouge">word_counts</code> dict has a dict for each genre, wherein the inner dict keep tracks of each word used within that genre. The <code class="language-plaintext highlighter-rouge">priors</code> dict simply measures what portion of our training data is in each category.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_train_data</span><span class="p">,</span> <span class="n">Y_train_data</span><span class="p">,</span> <span class="n">X_test_data</span><span class="p">,</span> <span class="n">Y_test_data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">X_train_data</span> <span class="o">=</span> <span class="n">X_train_data</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">Y_train_data</span> <span class="o">=</span> <span class="n">Y_train_data</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">X_test_data</span> <span class="o">=</span> <span class="n">X_test_data</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">Y_test_data</span> <span class="o">=</span> <span class="n">Y_test_data</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">"Easy"</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s">"Rap"</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s">"Country"</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s">"Post-1980s Rock"</span><span class="p">:</span> <span class="p">{}</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">priors</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">"Easy"</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s">"Rap"</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s">"Country"</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s">"Post-1980s Rock"</span><span class="p">:</span> <span class="mf">0.</span>
+        <span class="p">}</span></code></pre></figure>
+
+<h2 id="auxiliary-functions---tokenize-stem-and-count">Auxiliary functions - tokenize, stem and count</h2>
+
+<p>To start off, we needed to define a few auxiliary functions to help us out with tokenizing, stemming and counting. To help speed up this process, we imported the <code class="language-plaintext highlighter-rouge">nltk</code> library which helps us accomplish most of these basic tasks. <code class="language-plaintext highlighter-rouge">nltk</code> is a very powerful library and something I discussed <a href="https://rosshochwert.github.io/2015/07/17/twitter-sentiment-analysis/">before</a>, so check it out. <code class="language-plaintext highlighter-rouge">nltk</code> has a built-in library for NaiveBayes, but there’s nothing like building it yourself.</p>
+
+<p>The first function is <code class="language-plaintext highlighter-rouge">tokenize</code>, which tokenizes our sentences by stripping down a sentence into an array of individual words. <code class="language-plaintext highlighter-rouge">stem_tokens</code> stems a list of words, which is the process of taking the stems of words, like turning <em>swimming</em> into <em>swim</em> in order to combine like words and keep our word list tight. Finally, <code class="language-plaintext highlighter-rouge">count_words</code> makes a dict and records the count of each word provided.</p>
+
+<p>Normally, we would also remove stopwords, but this has already been done for us.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">	<span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+	    <span class="n">tokens</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+	    <span class="n">stems</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">stem_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">stemmer</span><span class="p">)</span>
+	    <span class="k">return</span> <span class="n">stems</span>
+
+	<span class="k">def</span> <span class="nf">stem_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">,</span> <span class="n">stemmer</span><span class="p">):</span>
+	    <span class="n">stemmed</span> <span class="o">=</span> <span class="p">[]</span>
+	    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+	        <span class="n">stemmed</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">stemmer</span><span class="p">.</span><span class="n">stem</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">,</span> <span class="s">"replace"</span><span class="p">)))</span>
+	    <span class="k">return</span> <span class="n">stemmed</span>
+
+	<span class="k">def</span> <span class="nf">count_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+	    <span class="n">wc</span> <span class="o">=</span> <span class="p">{}</span>
+	    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+	        <span class="n">wc</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">wc</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span>
+	    <span class="k">return</span> <span class="n">wc</span></code></pre></figure>
+
+<h2 id="training-the-corpus">Training the corpus</h2>
+
+<p>The next step is to “train” our model. We’re really looking to accomplish two things here:</p>
+
+<ol>
+  <li>Take a tally of all the songs in our database, looking at the distribution of genres across the songs. Is country 20% of the songs, or 40%? This is also known as looking at the prior.</li>
+  <li>Take a tally of all the words used, and how often per genre. We basically want to know how often the word “truck” was used in general, and then how often it was used across Rap, Easy Listening, Country and Rock.</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="k">def</span> <span class="nf">train_corpus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">X_train_data</span><span class="p">):</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">Y_train_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">priors</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">X_train_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">words</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">count_words</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="c1"># if we haven't seen a word yet, let's add it to our dictionaries with a count of 0
+</span>                <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">vocab</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="p">.</span><span class="n">vocab</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="n">category</span><span class="p">]:</span>
+                    <span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">vocab</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span></code></pre></figure>
+
+<h2 id="predict-the-song">Predict the song</h2>
+
+<p>The beast of the code is in the prediction phase, but let’s take it step by step.</p>
+
+<p>First, we tokenize and count the words from our new song. Then, we calculate the priors for each genre, which again is just the percent breakdown of the genres. We divide the amount of songs in each category by the total in order to get the prior.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="k">def</span> <span class="nf">predict_song</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">song</span><span class="p">):</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">count_words</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+        <span class="n">prior_rock</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">priors</span><span class="p">[</span><span class="s">"Post-1980s Rock"</span><span class="p">]</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">priors</span><span class="p">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">prior_rap</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">priors</span><span class="p">[</span><span class="s">"Rap"</span><span class="p">]</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">priors</span><span class="p">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">prior_country</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">priors</span><span class="p">[</span><span class="s">"Country"</span><span class="p">]</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">priors</span><span class="p">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">prior_easy</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">priors</span><span class="p">[</span><span class="s">"Easy"</span><span class="p">]</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">priors</span><span class="p">.</span><span class="n">values</span><span class="p">()))</span></code></pre></figure>
+
+<p>Second, we calculate the log-probability for our new song by looking up each of the words from our new song in our model. Why log probability? We’re dealing with a very large corpus with pretty wide-reaching word use (despite the fact that most Top 40 songs may sound the same). Our numbers will get very small very fast, so better to log everything and work with negatives.</p>
+
+<p>This log-probability is made up of three elements:</p>
+
+<ol>
+  <li><strong>Evidence</strong> - What is the probability that this word appears in our corpus?</li>
+  <li><strong>Likelihood</strong> - What is the probability that this word appears in each genre?</li>
+  <li><strong>Count</strong> - How many times does this word appear in this song?</li>
+</ol>
+
+<p>We then multiply how often the word appears by the probability of the word appearing in each genre, and then divide by the overall probability of the genre. If the word appears a lot in a rap song but very little overall and the probability of that word appearing in a rap song is high, the log-probability will increase a lot. That’s the basic premise of naive bayes.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">        <span class="n">log_prob_rock</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">log_prob_country</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">log_prob_rap</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">log_prob_easy</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">w</span><span class="p">,</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># skip words that we haven't seen before, or words less than 3 letters long
+</span>            <span class="k">if</span> <span class="ow">not</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">vocab</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># calculate the probability that the word occurs at all
+</span>            <span class="n">p_word</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">vocab</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">vocab</span><span class="p">.</span><span class="n">values</span><span class="p">())</span>
+
+
+            <span class="c1"># for all categories, calculate P(word|category), or the probability a
+</span>            <span class="c1"># word will appear, given that we know that the document is &lt;category&gt;
+</span>            <span class="n">p_w_given_rock</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="s">"Post-1980s Rock"</span><span class="p">].</span><span class="n">get</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="s">"Post-1980s Rock"</span><span class="p">].</span><span class="n">values</span><span class="p">())</span>
+            <span class="n">p_w_given_rap</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="s">"Rap"</span><span class="p">].</span><span class="n">get</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="s">"Rap"</span><span class="p">].</span><span class="n">values</span><span class="p">())</span>
+            <span class="n">p_w_given_easy</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="s">"Easy"</span><span class="p">].</span><span class="n">get</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="s">"Easy"</span><span class="p">].</span><span class="n">values</span><span class="p">())</span>
+            <span class="n">p_w_given_country</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="s">"Country"</span><span class="p">].</span><span class="n">get</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">word_counts</span><span class="p">[</span><span class="s">"Country"</span><span class="p">].</span><span class="n">values</span><span class="p">())</span>
+
+            <span class="c1"># add new probability to our running total: log_prob_&lt;category&gt;. if the probability
+</span>            <span class="c1"># is 0 (i.e. the word never appears for the category), then skip it
+</span>            <span class="k">if</span> <span class="n">p_w_given_rock</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">log_prob_rock</span> <span class="o">+=</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">cnt</span> <span class="o">*</span> <span class="n">p_w_given_rock</span> <span class="o">/</span> <span class="n">p_word</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">p_w_given_rap</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">log_prob_rap</span> <span class="o">+=</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">cnt</span> <span class="o">*</span> <span class="n">p_w_given_rap</span> <span class="o">/</span> <span class="n">p_word</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">p_w_given_easy</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">log_prob_easy</span> <span class="o">+=</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">cnt</span> <span class="o">*</span> <span class="n">p_w_given_easy</span> <span class="o">/</span> <span class="n">p_word</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">p_w_given_country</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">log_prob_country</span> <span class="o">+=</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">cnt</span> <span class="o">*</span> <span class="n">p_w_given_country</span> <span class="o">/</span> <span class="n">p_word</span><span class="p">)</span></code></pre></figure>
+
+<p>Once we finishing looping through the words of our new song, we need to add in the prior of that genre occurring (addition here because we’re on a log scale). The winner of our naive bayes battle is whoever has the highest score!</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">        <span class="n">rock_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">log_prob_rock</span> <span class="o">+</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">prior_rock</span><span class="p">))</span>
+        <span class="n">country_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">log_prob_country</span> <span class="o">+</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">prior_country</span><span class="p">))</span>
+        <span class="n">rap_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">log_prob_rap</span> <span class="o">+</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">prior_rap</span><span class="p">))</span>
+        <span class="n">easy_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">log_prob_easy</span> <span class="o">+</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">prior_easy</span><span class="p">))</span>
+
+        <span class="n">rock_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">log_prob_rock</span> <span class="o">+</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">prior_rock</span><span class="p">))</span>
+        <span class="n">country_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">log_prob_country</span> <span class="o">+</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">prior_country</span><span class="p">))</span>
+        <span class="n">rap_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">log_prob_rap</span> <span class="o">+</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">prior_rap</span><span class="p">))</span>
+        <span class="n">easy_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">log_prob_easy</span> <span class="o">+</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">prior_easy</span><span class="p">))</span>
+
+        <span class="n">winner</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rock_score</span><span class="p">,</span> <span class="n">country_score</span><span class="p">,</span> <span class="n">rap_score</span><span class="p">,</span> <span class="n">easy_score</span><span class="p">)</span></code></pre></figure>
+
+<p>I hope this code helps you! Look forward to our k-nearest neighbors implementation soon!</p>
+
+<p>Notes:</p>
+
+<ol>
+  <li>Some code inspiration from <a href="http://blog.yhat.com/posts/naive-bayes-in-python.html">here</a> - Courtesy of Yhat</li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-08-01T00:00:00-04:00">August 01, 2016</time></p>
+        
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=https://rosshochwert.github.io/naive-bayes-python/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://rosshochwert.github.io/naive-bayes-python/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https://rosshochwert.github.io/naive-bayes-python/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://rosshochwert.github.io/naive-bayes-python/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="https://rosshochwert.github.io/customer-lifetime-value-part-2/" class="pagination--pager" title="A Statistical Approach to Customer Lifetime Value - Part 2: Exponential Churn Rates
+">Previous</a>
+    
+    
+      <a href="https://rosshochwert.github.io/customer-lifetime-value-part-3/" class="pagination--pager" title="A Statistical Approach to Customer Lifetime Value - Part 3: Duration Dependence
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/knn-python/" rel="permalink">Can We Predict a Song’s Genre from its Lyrics? - Part 2
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">What if our neighbors were one of us? Just strangers sitting on a bus?
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-4/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 4: The Beta Geometric
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Every customer is a unique snowflake, let’s treat them like that.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-3/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 3: Duration Dependence
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  5 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Let’s spice up our initial model by allowing retention rates to increase over time.
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="https://rosshochwert.github.io/customer-lifetime-value-part-2/" rel="permalink">A Statistical Approach to Customer Lifetime Value - Part 2: Exponential Churn Rates
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  6 minute read
+	
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">After reading my previous blog post on CLV, you send off a data request to your data analytics guy asking him to pull the January 2014 subscribers and plot t...</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/rosshochwert"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="https://rosshochwert.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Ross Hochwert. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="https://rosshochwert.github.io/assets/js/main.min.js"></script>
+<script type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+  </body>
+</html>
+
